@@ -4,6 +4,7 @@ const { options, getIp } = require("./cli");
 const colors = require("colors/safe");
 const boxen = require("boxen");
 const ora = require("ora");
+const fs = require("fs");
 
 // for server
 const express = require("express");
@@ -18,7 +19,7 @@ const path = require("path");
 const chokidar = require("chokidar");
 
 // middleware
-app.use(cors);
+app.use(cors());
 
 // spinner
 const spinner = ora({
@@ -86,4 +87,18 @@ io.on("connection", (socket) => {
             )
         );
     });
+});
+
+const RELOADER_FILE_PATH = path.join(__dirname, "../client/reloader.js");
+
+const reloaderText = fs.readFileSync(RELOADER_FILE_PATH, "utf8");
+
+if (!reloaderText) {
+    colors.red(`Client file load failed!`);
+}
+
+app.get("/reloader.js", (req, res) => {
+    res.setHeader("Content-Type", "application/javascript");
+    res.writeHead(200);
+    res.end(reloaderText);
 });

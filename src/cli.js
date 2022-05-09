@@ -2,6 +2,8 @@ const { program, Option } = require("commander");
 const colors = require("colors/safe");
 const path = require("path");
 const fs = require("fs");
+const Uglify = require("uglify-js");
+const ora = require("ora");
 
 program
     .addOption(
@@ -17,19 +19,38 @@ program
     .addOption(
         new Option("-p, --port [type]", "For port").preset("").default("")
     )
+    .addOption(new Option("--client").preset(true).hideHelp(true))
     .parse();
 
+// spinner
+const spinner = ora({
+    text: colors.yellow("Bundling client file..."),
+    color: "yellow",
+});
+
+if (program.opts().client) {
+    buildClient();
+    process.exit(1);
+}
+
 const getIp = () => {
-    return Object.values(require("os").networkInterfaces())
+    const obj = Object.values(require("os").networkInterfaces())
         .flat()
-        .find(({ family, internal }) => family === "IPv4" && !internal).address;
+        .find(({ family, internal }) => family === "IPv4" && !internal);
+
+    return obj ? obj.address : "Not found";
 };
 
 let hostArr = program.opts().host;
 
 if (hostArr.includes("ip")) {
     const index = hostArr.indexOf("ip");
-    hostArr[index] = getIp();
+    const localIp = getIp();
+    if (localIp === "Not found") {
+        console.log(colors.red("Local ip not found!"));
+        process.exit(1);
+    }
+    hostArr[index] = localIp;
 }
 
 let options = program.opts();
@@ -51,5 +72,25 @@ options.watch.forEach((v) => {
         process.exit(1);
     }
 });
+
+function buildClient() {
+    spinner.start();
+    const SOCKET_FILE_PATH = path.join(__dirname, "../client/socket.io.js");
+    const CLIENT_FILE_PATH = path.join(__dirname, "../client/client.js");
+    const RELOADER_FILE_PATH = path.join(__dirname, "../client/reloader.js");
+
+    const clientFiles = {
+        socketFile: fs.readFileSync(SOCKET_FILE_PATH, "utf8"),
+        clientFile: fs.readFileSync(CLIENT_FILE_PATH, "utf8"),
+    };
+
+    const result = Uglify.minify(clientFiles);
+    try {
+        fs.writeFileSync(RELOADER_FILE_PATH, result.code, "utf8");
+        spinner.succeed(colors.green("Client file build successfully..."));
+    } catch (err) {
+        spinner.fail(colors.red("Something went wrong! = " + err.message));
+    }
+}
 
 module.exports = { options, getIp };
