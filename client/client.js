@@ -1,6 +1,5 @@
 function selfFunction() {
-    // const hostUrl = getHostUrl();
-    const hostUrl = "http://localhost:64356";
+    const hostUrl = getHostUrl();
 
     function getHostUrl() {
         const scriptDocument = document.getElementsByTagName("script");
