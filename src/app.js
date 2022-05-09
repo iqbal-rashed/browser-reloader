@@ -83,7 +83,13 @@ io.on("connection", (socket) => {
     socket.on("disconnect", (reason) => {
         spinner.fail(
             colors.red(
-                `Reloader lost connection with ${socket.browserObj.browser} ${socket.browserObj.host}`
+                `Reloader lost connection with ${
+                    socket.browserObj
+                        ? socket.browserObj.browser +
+                          " " +
+                          socket.browserObj.host
+                        : ""
+                }`
             )
         );
     });
