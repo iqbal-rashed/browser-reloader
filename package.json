@@ -4,8 +4,7 @@
     "description": "",
     "main": "src/app.js",
     "keywords": [
-        "reloader",
-        "uglifyjs"
+        "reloader"
     ],
     "author": "Rashed Iqbal",
     "license": "ISC",

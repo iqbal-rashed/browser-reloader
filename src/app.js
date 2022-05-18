@@ -55,6 +55,8 @@ httpServer.listen(64356, () => {
 
 // socket io
 io.on("connection", (socket) => {
+    socket.emit("reloadUrls", { urls: options.url });
+
     socket.on("browserConnected", function (browserObj) {
         socket.browserObj = browserObj;
 
@@ -81,17 +83,19 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", (reason) => {
-        spinner.fail(
-            colors.red(
-                `Reloader lost connection with ${
-                    socket.browserObj
-                        ? socket.browserObj.browser +
-                          " " +
-                          socket.browserObj.host
-                        : ""
-                }`
-            )
-        );
+        if (socket.browserObj) {
+            spinner.fail(
+                colors.red(
+                    `Reloader lost connection with ${
+                        socket.browserObj
+                            ? socket.browserObj.browser +
+                              " " +
+                              socket.browserObj.host
+                            : ""
+                    }`
+                )
+            );
+        }
     });
 });
 

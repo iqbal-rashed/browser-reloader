@@ -7,12 +7,18 @@ const ora = require("ora");
 
 program
     .addOption(
-        new Option("-w, --watch [type...]", "To watch directory")
+        new Option(
+            "-w, --watch [type...]",
+            "To watch directory,you can watch multiple directories"
+        )
             .preset("/")
             .default(["/"])
     )
     .addOption(
-        new Option("-h, --host [type...]", "For host")
+        new Option(
+            "-h, --host [type...]",
+            "For reload host,also reload multiple host"
+        )
             .preset("localhost")
             .default(["localhost"])
     )
