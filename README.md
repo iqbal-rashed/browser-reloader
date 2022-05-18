@@ -2,7 +2,7 @@
 <br>
 
 <p align="center">
-  <img width="150" src="./images/logo.png">
+  <img width="150" src="https://raw.githubusercontent.com/iqbal-rashed/browser-reloader/main/images/logo.png">
 </p>
 <h1 align="center"> Browser Reloader </h1>
 <p align="center">
@@ -104,7 +104,7 @@ Options:
 `Current Browser:` If you want to reload your current browser then do nothing just install browser extension.
 
 `Remote Browser:` If you want to reload remote browser through local wifi then switch local to wifi, input Ipv4 address then press connect. see below <br>
-![Alt Text](./images/extension.gif)
+![Alt Text](https://raw.githubusercontent.com/iqbal-rashed/browser-reloader/main/images/extension.gif)
 <br>
 
 ## Contribution
