@@ -6,7 +6,7 @@
 </p>
 <h1 align="center"> Browser Reloader </h1>
 <p align="center">
-  <b >An Awesome CLI tool to reload the browser on every code change</b>
+  <b >An Awesome CLI tool to reload browser on every code change</b>
 </p>
 
 <br>
@@ -108,7 +108,7 @@ Options:
 <br>
 
 ## Contribution
-If you want to contribute or issue any bug, you welcome
+If you want to contribute or report any bug, you welcome
 
 <br>
 Don't forget to give a star
