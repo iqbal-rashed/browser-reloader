@@ -52,7 +52,8 @@ Manifest V3 (Remote Wi-Fi not Supported)
 <br>
 [Visit repository](https://github.com/iqbal-rashed/reloader-extension-v3)
 
-Firefox and Firefox android comming soon...
+Firefox and Firefox android <br>
+[Get Extension](https://addons.mozilla.org/en-US/firefox/addon/browser-reloader/)
 
 ### 2. Method: Script Tag
 
