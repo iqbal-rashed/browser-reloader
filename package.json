@@ -2,9 +2,14 @@
     "name": "browser-reloader",
     "version": "1.0.1",
     "description": "An Awesome CLI tool to reload browser on every code change",
+    "homepage": "https://github.com/iqbal-rashed/browser-reloader",
     "main": "src/app.js",
     "keywords": [
-        "reloader"
+        "reloader",
+        "browser-refresh",
+        "browser-reloader",
+        "watchDir",
+        "watcher"
     ],
     "author": "Rashed Iqbal",
     "license": "MIT",
@@ -14,6 +19,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/iqbal-rashed/browser-reloader"
+    },
+    "bugs": {
+        "url": "https://github.com/iqbal-rashed/browser-reloader/issues"
     },
     "dependencies": {
         "boxen": "^4.2.0",
