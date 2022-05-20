@@ -48,7 +48,7 @@ Manifest V2 (Recommended)
 <br>
 [Visit repository](https://github.com/iqbal-rashed/browser-reloader-extension)
 
-Manifest V3 (Remote Wi-Fi not Supported)
+Manifest V3
 <br>
 [Visit repository](https://github.com/iqbal-rashed/reloader-extension-v3)
 
