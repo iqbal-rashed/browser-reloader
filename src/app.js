@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const { options, getIp } = require("./cli");
-const colors = require("colors/safe");
+const chalk = require("chalk");
 const boxen = require("boxen");
 const ora = require("ora");
 const fs = require("fs");
@@ -23,7 +23,7 @@ app.use(cors());
 
 // spinner
 const spinner = ora({
-    text: colors.yellow("Connecting with extension..."),
+    text: chalk.yellow("Connecting with extension..."),
     color: "yellow",
 });
 
@@ -31,7 +31,7 @@ const spinner = ora({
 httpServer.listen(64356, () => {
     console.log(
         boxen(
-            colors.blue(
+            chalk.blue(
                 "Reloader is running...\n" +
                     "Watch Dir: " +
                     options.watch.join(", ") +
@@ -61,9 +61,9 @@ io.on("connection", (socket) => {
         socket.browserObj = browserObj;
 
         spinner.succeed(
-            colors.green(
-                `Reloader connected with ${colors.bgGreen(
-                    " " + colors.white(browserObj.browser) + " "
+            chalk.green(
+                `Reloader connected with ${chalk.bgGreen(
+                    " " + chalk.white(browserObj.browser) + " "
                 )} ${browserObj.host}`
             )
         );
@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", (reason) => {
         if (socket.browserObj) {
             spinner.fail(
-                colors.red(
+                chalk.red(
                     `Reloader lost connection with ${
                         socket.browserObj
                             ? socket.browserObj.browser +
@@ -104,7 +104,7 @@ const RELOADER_FILE_PATH = path.join(__dirname, "../client/reloader.js");
 const reloaderText = fs.readFileSync(RELOADER_FILE_PATH, "utf8");
 
 if (!reloaderText) {
-    colors.red(`Client file load failed!`);
+    chalk.red(`Client file load failed!`);
 }
 
 app.get("/reloader.js", (req, res) => {

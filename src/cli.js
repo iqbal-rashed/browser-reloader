@@ -1,5 +1,5 @@
 const { program, Option } = require("commander");
-const colors = require("colors/safe");
+const chalk = require("chalk");
 const path = require("path");
 const fs = require("fs");
 const Uglify = require("uglify-js");
@@ -30,7 +30,7 @@ program
 
 // spinner
 const spinner = ora({
-    text: colors.yellow("Bundling client file..."),
+    text: chalk.yellow("Bundling client file..."),
     color: "yellow",
 });
 
@@ -53,7 +53,7 @@ if (hostArr.includes("ip")) {
     const index = hostArr.indexOf("ip");
     const localIp = getIp();
     if (localIp === "Not found") {
-        console.log(colors.red("Local ip not found!"));
+        console.log(chalk.red("Local ip not found!"));
         process.exit(1);
     }
     hostArr[index] = localIp;
@@ -61,7 +61,7 @@ if (hostArr.includes("ip")) {
 
 let options = program.opts();
 if (isNaN(options.port)) {
-    console.log(colors.red("Please input valid port to start reloader"));
+    console.log(chalk.red("Please input valid port to start reloader"));
     process.exit(1);
 }
 
@@ -74,7 +74,7 @@ hostArr.forEach((v) => {
 options.watch.forEach((v) => {
     const dirPath = path.join(process.cwd(), v);
     if (!fs.existsSync(dirPath)) {
-        console.log(colors.red("Watch directories not exist!"));
+        console.log(chalk.red("Watch directories not exist!"));
         process.exit(1);
     }
 });
@@ -93,9 +93,9 @@ function buildClient() {
     const result = Uglify.minify(clientFiles);
     try {
         fs.writeFileSync(RELOADER_FILE_PATH, result.code, "utf8");
-        spinner.succeed(colors.green("Client file build successfully..."));
+        spinner.succeed(chalk.green("Client file build successfully..."));
     } catch (err) {
-        spinner.fail(colors.red("Something went wrong! = " + err.message));
+        spinner.fail(chalk.red("Something went wrong! = " + err.message));
     }
 }
 
