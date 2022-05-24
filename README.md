@@ -1,6 +1,3 @@
-### Sorry for my poor English. If you want to contribute please fix the docs in English first
-<br>
-
 <p align="center">
   <img width="150" src="https://raw.githubusercontent.com/iqbal-rashed/browser-reloader/main/images/logo.png">
 </p>
@@ -110,6 +107,6 @@ Options:
 
 ## Contribution
 If you want to contribute or report any bug, you welcome
-
 <br>
-Don't forget to give a star
+<br>
+ Sorry for my poor English. Don't forget to give a star
