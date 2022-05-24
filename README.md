@@ -1,3 +1,4 @@
+<br>
 <p align="center">
   <img width="150" src="https://raw.githubusercontent.com/iqbal-rashed/browser-reloader/main/images/logo.png">
 </p>
