@@ -1,6 +1,6 @@
 {
     "name": "browser-reloader",
-    "version": "1.0.5",
+    "version": "0.0.1",
     "description": "An Awesome CLI tool to reload browser on every code change",
     "homepage": "https://github.com/iqbal-rashed/browser-reloader",
     "main": "src/app.js",
