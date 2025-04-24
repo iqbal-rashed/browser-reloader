@@ -1,121 +1,101 @@
-<br>
-<p align="center">
-  <img width="150" src="https://raw.githubusercontent.com/iqbal-rashed/browser-reloader/main/images/logo.png">
-</p>
-<h1 align="center"> Browser Reloader </h1>
-<p align="center">
-  <b >An Awesome CLI tool to reload browser on every code change</b>
-</p>
+# 🔁 Browser Reloader v2 (Beta)
 
-<br>
+**Browser Reloader** is a lightweight, pluggable, and configuration-driven file watcher that automatically triggers browser reloads via WebSocket when changes are detected. Perfect for enhancing developer experience during local development workflows.
 
-## Description
-Browser Reloader is a CLI tool that automatically reloads your browser when you make changes to your code. It's particularly useful for web development projects that use template engines. The tool uses chokidar to watch directories for changes, and socket.io to communicate with the browser.
+## ✨ Features
 
+- 🔍 Watch files and directories for changes
+- 🎯 Ignore specific glob patterns
+- 🧘 Debounce rapid filesystem events
+- 🔕 Quiet mode to suppress logs
+- 🔄 Auto reload connected browsers via WebSocket
+- ⚙️ Configuration via CLI or config file (`.reloaderrc`, `reloader.config.ts`, etc.)
 
+> This is version 2 and currently in **Beta**. While the core features are stable.
+> If you encounter any issues or have feature requests, please feel free to open an issue or contribute directly to the project.
 
-Features:
+## 🚀 Installation
 
-* Reload your browser on every code change.
-* Watch multiple directories and reload multiple hosts.
-* Reload another computer's browser with this tool (the other computer must be connected to the same network).
-
-
-
-## Installation: Command Line Tools
-You can install Browser Reloader locally or globally using npm.
-
-Locally:
 ```bash
-npm i browser-reloader
+npm install -D browser-reloader
 ```
 
-Globally:
+Or globally:
+
 ```bash
-npm i -g browser-reloader
+npm install -g browser-reloader
 ```
 
-## Installation: Connect Wtih Browser
+## 🛠️ Usage
 
-There are two method to connect with browser.
+### CLI
 
-### 1. Method: Extension
-To install, download and unzip the extension, open `chrome://extensions/`, check the "Developer mode" box, and use "Load unpacked" extension on the directory containing your downloaded folder.
+```bash
+reloader [options]
+```
 
-Manifest V2 (Recommended): [Download](https://github.com/iqbal-rashed/browser-reloader/releases/download/initial-release/manifest_v2.zip)
+#### Options
 
-Manifest V3: [Download](https://github.com/iqbal-rashed/browser-reloader/releases/download/initial-release/manifest_v3.zip)
+| Flag              | Description                     | Default                          |
+| ----------------- | ------------------------------- | -------------------------------- |
+| `-w, --watch`     | Files or directories to watch   | `["."]`                          |
+| `-i, --ignore`    | Glob patterns to ignore         | `["node_modules/**", ".git/**"]` |
+| `-d, --debounce`  | Debounce filesystem events (ms) | `300`                            |
+| `--quiet`         | Suppress non-error output       | `false`                          |
+| `--config <path>` | Path to config file             | Auto-detected                    |
 
-Firefox Addons: [Get Extension](https://addons.mozilla.org/en-US/firefox/addon/browser-reloader/)
+## 🧩 Configuration
 
+You can use a dedicated config file such as `.reloaderrc.json`, `reloader.config.ts`, or add a `"reloader"` field in `package.json`.
 
-### 2. Method: Script Tag
+### Example (reloader.config.js)
 
-Add this script tag into your project. If you want to reload both (locally and remotely) browser just add remote wi-fi script tag.
+```js
+module.exports = {
+  watch: ["./src", "./public"],
+  ignore: ["node_modules/**", ".git/**"],
+  debounce: 500,
+  quiet: false,
+};
+```
+
+## 🧪 Sample Client Integration
+
+Add the following to your HTML page:
 
 Locally:
-```bash
-<script src="http://localhost:64356/reloader.js"></script>
+
+```html
+<script src="http://localhost:43878/reloader.js"></script>
 ```
 
 Remote Wi-Fi:
-```bash
-<script src="http://{IPv4 Address}:64356/reloader.js"></script>
+
+```html
+<script src="http://{IPv4 Address}:43878/reloader.js"></script>
 ```
 
+This will connect to the reloader WebSocket server and reload the page automatically when changes are detected.
 
+## 🧠 How It Works
 
-## How to use
+1. Uses `chokidar` to watch files.
+2. On change, debounces and broadcasts a `"reload"` message via `ws`.
+3. Client JavaScript listens to this and triggers `location.reload()`.
 
-### Start Reloader: CLI
-To start Browser Reloader from the command line, use the following options:
-```bash
-$ reloader --help
+## 📦 Example Programmatic Usage
 
-Options:
-  -w, --watch [type...]  To watch directory, you can watch multiple directories 
-  -h, --host [type...]   For reload host, also reload multiple hosts 
-  -p, --port [type]      For port 
-  --help                 display help for command
+```ts
+import { reloader } from "browser-reloader";
+
+reloader({
+  watch: ["./src"],
+  ignore: ["**/*.log"],
+  debounce: 400,
+  quiet: true,
+});
 ```
 
-### Examples
-Here are some examples of how to use these options:
+## Contributing
 
-- Watch all directories and reload localhost (default):
-```bash
-$ reloader 
-```
-- Watch the public and views directories and reload localhost:
-```bash
-$ reloader -w public views
-```
-- Watches CSS inside the public folder, views directories, and reload all localhost:
-```bash
-$ reloader -w public/css views
-```
-- Watches public and views directories and reload localhost:4000:
-```bash
-$ reloader -w public views -p 4000
-```
-- Watches public and views directories and reload {IPv4 Address}:4000 (if you want to reload another PC or Android browser, use this option):
-```bash
-$ reloader -w public views -p 4000 -h {IPv4 Address}
-```
-- Watches public and views directories and reload {IPv4 Address}:4000, localhost:4000 (if you want to reload both the current PC browser and another PC or Android browser, use this option):
-```bash
-$ reloader -w public views -p 4000 -h {IPv4 Address} localhost
-```
-- Watches public and views directories and reload {IPv4 Address}:4000, localhost:4000 (if you want to reload multiple ports, use this option):
-```bash
-$ reloader -w public views -h localhost:3000 localhost:4000
-```
-
-
-
-If you want to reload your current browser then do nothing just install browser extension.If you want to reload remote browser through local wifi then switch local to wifi, input Ipv4 address then press connect.
-
-## Contribution
-If you want to contribute or report any bug, you welcome
-<br>
- Don't forget to give a star😍
+Contributions are welcome! Feel free to submit a pull request or open an issue on GitHub.
